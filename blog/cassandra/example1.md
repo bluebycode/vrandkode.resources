@@ -1,5 +1,7 @@
 
-# Importing data
+# Cassandra
+
+## Importing Incidents data
 
 * Downloading the Incidents dataset from _TSV for Excel_ version from https://data.sfgov.org/Public-Safety/Map-of-Police-Department-Incidents/gxxq-x39z and clean data before importing: removing the headers, transform and merge the date/time into time field. The results will be saved under incidents.tsv
 ```
@@ -52,7 +54,8 @@ Processed: 25210 rows; Rate:    1094 rows/s; Avg. rate:    2024 rows/s
 
 
 ---
-# Is Cassandra running
+## Troubleshooting
+### Is Cassandra running
 
 Linux
 ```
@@ -65,7 +68,7 @@ sudo lsof -PiTCP -sTCP:LISTEN|grep 9042
 java      41458 vrandkode  190u  IPv4 0x32271e72c028899      0t0  TCP localhost:9042 (LISTEN)
 ```
 
-# Installing DevCenter
+### Installing DevCenter
 
 * DevCenter closes bceause of java virtual machine
 Edit DevCenter.app/Contents/devcenter.ini and add the line
@@ -75,6 +78,6 @@ Edit DevCenter.app/Contents/devcenter.ini and add the line
 ```
 
 
-## Data modeling
+### Data modeling
 
 From dasbhoard: [[http://kdm.dataview.org/kdm.jsp]]
