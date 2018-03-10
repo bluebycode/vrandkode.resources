@@ -1,7 +1,7 @@
 
 # Importing data
 
-* Downloading the Incidents dataset from _TSV for Excel_ version from https://data.sfgov.org/Public-Safety/Map-of-Police-Department-Incidents/gxxq-x39z and clean data before importing: removing the headers, transform and merge the date/time into time field:
+* Downloading the Incidents dataset from _TSV for Excel_ version from https://data.sfgov.org/Public-Safety/Map-of-Police-Department-Incidents/gxxq-x39z and clean data before importing: removing the headers, transform and merge the date/time into time field. The results will be saved under incidents.tsv
 ```
 wget -O- "https://data.sfgov.org/api/views/gxxq-x39z/rows.tsv?accessType=DOWNLOAD" |tail -n +2|sed -E 's/([0-9]+)\/([0-9]+)\/([0-9]+) ([0-9\:]+) [A-M]+.([0-9\:]+)/\3-\1-\2 \5:00/g' > incidents.tsv
 ```
