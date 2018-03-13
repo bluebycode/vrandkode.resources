@@ -160,16 +160,19 @@ gcc -O2 -msse4 dist-v.c -o dist-v
 
 ## Extra: Ispc compilation
 
+
+
 *ispc* compiles a C-based SPMD programming language to run on the SIMD units of CPUs; it frequently provides a 3x or more speedup on CPUs with 4-wide vector SSE units and 5x-6x on CPUs with 8-wide AVX vector units, without any of the difficulty of writing intrinsics code. Parallelization across multiple cores is also supported by ispc, making it possible to write programs that achieve performance improvement that scales by both number of cores and vector unit size.
 
 https://github.com/ispc/ispc
 
 ## How to write ispc code
 
-https://ispc.github.io/example.html
+Reference: https://indico.cern.ch/event/267608/contributions/1604226/attachments/478423/661899/ispc.pdf
 
+Examples: https://ispc.github.io/example.html
 
-mm.ispc: https://github.com/vrandkode/vrandkode.resources/blob/master/blog/hpc/simd_sources/mm.ispc
+Matrix multiplication: [mm.ispc](https://github.com/vrandkode/vrandkode.resources/blob/master/blog/hpc/simd_sources/mm.ispc)
 
 ## How to compile with ispc
 
