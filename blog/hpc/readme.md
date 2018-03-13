@@ -181,7 +181,7 @@ for (i=0; i<N; i++)
 
 * Vectorizing loop at sinc.c:58
 
-Compiler vectorise it but loop is just the assignment.
+Compiler vectorised it, but this loop contains just an assignment <= bad!
 ```
 for (i=0; i<N; i++)
     x[i] = 1.0; <-- assignment
