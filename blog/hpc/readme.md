@@ -159,9 +159,61 @@ gcc -O2 -msse4 mm-v.c -o mm-v
 0.48407 sec
 ```
 
-| | | |
+| |mmv |mm-v |
 |-|-|-|
 | time | 0.50073| 0.50654 |
+
+results:
+
+Locality spatial achieved, unrolled loops to block of size = 4, one per intrinsec vector:
+
+```
+ for (i = 0; i < N; i++) 
+       for (k = 0; k < N; k++) 
+          for (j = 0; j < N; j+=4) 
+          {
+             __m128 bv = _mm_load_ps(&b[k][j]);
+             __m128 av = _mm_set1_ps(a[i][k]);
+             __m128 cv = _mm_load_ps(&c[i][j]);
+             __m128 tmp = _mm_add_ps(cv,_mm_mul_ps(av,bv));
+             _mm_store_ps(&c[i][j],tmp);
+             //c[i][j] = c[i][j] + a[i][k]*b[k][j];
+	  }
+```
+
+* Vectorised code ''sinx-v.c'
+
+```gcc -O2 -msse4 sinx-v.c -o sinx-v
+hpc002@yuca:~/SIMD-codes$ ./sinx-v 10000000
+Using N=10000000 and terms=12
+Sum for result: 8932797.0000
+Exec time:   0.94219 sec.
+```
+
+```
+ for (i = 0; i < N; i++) 
+       for (k = 0; k < N; k++) 
+          for (j = 0; j < N; j+=4) 
+          {
+             __m128 bv = _mm_load_ps(&b[k][j]);
+             __m128 av = _mm_set1_ps(a[i][k]);
+             __m128 cv = _mm_load_ps(&c[i][j]);
+             __m128 tmp = _mm_add_ps(cv,_mm_mul_ps(av,bv));
+             _mm_store_ps(&c[i][j],tmp);
+             //c[i][j] = c[i][j] + a[i][k]*b[k][j];
+	  }
+```
+
+* Assembler generation
+
+$ gcc -O2 -S -msse4 sinx-v.c
+```
+	cvtsi2sdq       8(%rsp), %xmm1
+        cvtsi2sdq       (%rsp),  %xmm0
+```
+* Vectorial registers: xmm0,xmm1 (https://en.wikibooks.org/wiki/X86_Assembly/SSE)
+
+
 
 The code includes the vector intrisecs ```#include <smmintrin.h>```
 
