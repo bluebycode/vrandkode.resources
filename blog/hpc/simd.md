@@ -72,6 +72,18 @@ make success mm
 ```
 
 # Exercices
+## Pre. How to calculate Speed up of latencies
+ In order to carry out a more effective analysis on the mentioned scenarios and the
+results outlined above, we calculated the speedup on the latencies between the nonoptimized
+and optimized versions; with the help of the formula
+
+![](https://wikimedia.org/api/rest_v1/media/math/render/svg/71d9789d12f7c545c7bc5582b52f148a0d16c8de)
+
+```
+$ perf stat -r 50 ./mm
+
+```
+
 ## Product of two matrices
 
 1. Only compiler optimization
