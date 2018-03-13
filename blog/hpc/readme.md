@@ -95,12 +95,19 @@ Performance counter stats for './mm' (50 runs):
 
 ```
 
-## Product of two matrices
+## A. SIMD support of the processor core
+
+
+
+
+## B. Product of two matrices (MM)
 
 1. Only compiler optimization
 ```
-gcc -O2 mm.c -o mm
-./mm
+$ gcc -O2 mm.c -o mm
+$ ./mm
+Sum for matrix C: 5045830144.0000
+Exec time:   1.53517 sec.
 ```
 
 2. Auto-vectorization option
@@ -112,6 +119,56 @@ gcc -O2 -S mm.c
 gcc -O2 -ftree-vectorize -fopt-info-vec-optimized mm.c -o mmvoptimized
 gcc -O2 -ftree-vectorize -fopt-info-vec-missed mm.c -o mmvmissed
 ```
+
+* Optimization using info-vec flags
+*-fopt-info-vec-optimized/missed* Prints information about optimised/missed optimization opportunities from vectorization passes on stderr.
+
+```
+gcc -O2 -ftree-vectorize -fopt-info-vec-optimized sinx.c -o sinxOptimize
+```
+
+result:
+```
+Analyzing loop at sinx.c:16
+Analyzing loop at sinx.c:23
+sinx.c:12: note: vectorized 0 loops in function.
+Analyzing loop at sinx.c:67
+Analyzing loop at sinx.c:58
+Vectorizing loop at sinx.c:58
+sinx.c:58: note: === vect_do_peeling_for_alignment ===
+sinx.c:58: note: niters for prolog loop: MIN_EXPR <(unsigned int) -(((unsigned long) vect_px.28_79 & 15) >> 2) & 3, niters.25_3>Setting upper bound of nb iterations for prologue loop to 2
+sinx.c:58: note: === vect_update_inits_of_dr ===
+sinx.c:58: note: === vect_do_peeling_for_loop_bound ===Setting upper bound of nb iterations for epilogue loop to 2
+
+sinx.c:58: note: LOOP VECTORIZED.
+sinx.c:35: note: vectorized 1 loops in function.
+```
+
+* Analyzing loop at sinx.c:23
+
+```
+for (i=0; i<N; i++)
+```
+
+* Vectorizing loop at sinc.c:58
+Compiler vectorise it but loop is just assignment.
+```
+for (i=0; i<N; i++)
+    x[i] = 1.0; <-- assignment
+```
+
+```
+Vectorizing loop at sinx.c:58
+
+sinx.c:58: note: === vect_do_peeling_for_alignment ===
+sinx.c:58: note: niters for prolog loop: MIN_EXPR <(unsigned int) -(((unsigned long) vect_px.28_79 & 15) >> 2) & 3, niters.25_3>Setting upper bound of nb iterations for prologue loop to 2
+
+sinx.c:58: note: === vect_update_inits_of_dr ===
+sinx.c:58: note: === vect_do_peeling_for_loop_bound ===Setting upper bound of nb iterations for epilogue loop to 2
+
+sinx.c:58: note: LOOP VECTORIZED.
+```
+
 
 3. SIMD compiler intrinsics are used to explicitly exploit SIMD parallelis
 ```
@@ -147,6 +204,71 @@ gcc -O2 -msse4 sinx-v.c -o sinx-v
 ```
 
 Results are compared and discussed
+
+* Appendix. Comparative
+
+- O2 Optimization
+
+```
+hpc002@yuca:~/SIMD-codes$ perf stat -r 5 ./mm
+Sum for matrix C: 5045830144.0000
+Exec time:   1.53673 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   1.53718 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   1.55082 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   1.53737 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   1.53517 sec.
+
+ Performance counter stats for './mm' (5 runs):
+
+       1545,410842 task-clock (msec)         #    0,994 CPUs utilized            ( +-  0,21% )
+               142 context-switches          #    0,092 K/sec                    ( +-  2,76% )
+                 0 cpu-migrations            #    0,000 K/sec
+             1.200 page-faults               #    0,777 K/sec                    ( +- 10,42% )
+     1.597.723.097 cycles                    #    1,034 GHz                      ( +-  0,03% )
+       786.756.929 stalled-cycles-frontend   #   49,24% frontend cycles idle     ( +-  0,25% )
+       778.541.114 stalled-cycles-backend    #   48,73% backend  cycles idle     ( +-  1,58% )
+     3.600.835.033 instructions              #    2,25  insns per cycle
+                                             #    0,22  stalled cycles per insn  ( +-  0,01% )
+       514.964.651 branches                  #  333,222 M/sec                    ( +-  0,01% )
+           665.950 branch-misses             #    0,13% of all branches          ( +-  0,11% )
+
+       1,554860542 seconds time elapsed                                          ( +-  0,19% )
+
+hpc002@yuca:~/SIMD-codes$ perf stat -r 5 ./mmO3
+Sum for matrix C: 5045830144.0000
+Exec time:   0.45266 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   0.48628 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   0.49452 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   0.44726 sec.
+Sum for matrix C: 5045830144.0000
+Exec time:   0.51056 sec.
+
+ Performance counter stats for './mmO3' (5 runs):
+
+        487,087482 task-clock (msec)         #    0,991 CPUs utilized            ( +-  2,42% )
+                49 context-switches          #    0,101 K/sec                    ( +-  4,95% )
+                 0 cpu-migrations            #    0,000 K/sec                    ( +-100,00% )
+             1.200 page-faults               #    0,002 M/sec                    ( +- 10,43% )
+       503.694.080 cycles                    #    1,034 GHz                      ( +-  2,41% )
+       342.174.761 stalled-cycles-frontend   #   67,93% frontend cycles idle     ( +-  5,04% )
+       232.551.384 stalled-cycles-backend    #   46,17% backend  cycles idle     ( +-  3,51% )
+       909.150.957 instructions              #    1,80  insns per cycle
+                                             #    0,38  stalled cycles per insn  ( +-  0,04% )
+       130.253.324 branches                  #  267,413 M/sec                    ( +-  0,04% )
+           661.636 branch-misses             #    0,51% of all branches          ( +-  0,11% )
+
+       0,491444846 seconds time elapsed                                          ( +-  2,40% )
+```
+
+
+
 
 ## Euclidean distance: an array of computations of euclidean distances and the calculation of the maximum value (dist)
 
