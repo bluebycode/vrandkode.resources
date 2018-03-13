@@ -1,11 +1,10 @@
-# https://mop.cv.uma.es/mod/resource/view.php?id=424829
+* Campus virtual: https://mop.cv.uma.es/mod/resource/view.php?id=424829
 
-Flynn taxonomy
-https://en.wikipedia.org/wiki/Flynn%27s_taxonomy
+* Flynn taxonomy: https://en.wikipedia.org/wiki/Flynn%27s_taxonomy
 
 ![](https://raw.githubusercontent.com/vrandkode/vrandkode.resources/master/blog/hpc/flynn_taxonomy.png)
 
-SIMD. A computer which executes the same instructions on multiple pieces of data simultaneously. These are useful with algorithms which can be naturally parallelized, such as vector or matrix computations, image processing and the finite element method. Examples of devices with SIMD architecture are an array processor and a graphics processing unit (GPU).
+*SIMD*. A computer which executes the same instructions on multiple pieces of data simultaneously. These are useful with algorithms which can be naturally parallelized, such as vector or matrix computations, image processing and the finite element method. Examples of devices with SIMD architecture are an array processor and a graphics processing unit (GPU).
 
 Each processing unit (PU) is shown for a uni-core or multi-core compute:
 ![simd](https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/SIMD.svg/500px-SIMD.svg.png)
@@ -105,7 +104,7 @@ Results are compared and discussed
 1. Only compiler optimization
 ```
 gcc -O2 sinx.c -o mm
-./mm
+./sinx
 ```
 
 2. Auto-vectorization option
