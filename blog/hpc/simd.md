@@ -81,6 +81,17 @@ and optimized versions; with the help of the formula
 
 ```
 $ perf stat -r 50 ./mm
+Performance counter stats for './mm' (50 runs):
+4419.488297 task-clock:u (msec) # 0.999 CPUs utilized
+          0 context-switches:u # 0.000 K/sec
+          0 cpu-migrations:u # 0.000 K/sec
+        818 page-faults:u # 0.185 K/sec
+268,375,697 cycles:u # 1.192 GHz
+463,552,765 instructions:u # 0.09 insn per cycle
+ 40,621,256 branches:u # 9.191 M/sec
+    130,188 branch-misses:u # 0.32% of all branches
+
+4.422536334 seconds time elapsed 
 
 ```
 
