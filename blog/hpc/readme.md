@@ -97,8 +97,39 @@ Performance counter stats for './mm' (50 runs):
 
 ## A. SIMD support of the processor core
 
+```
+$ cat /proc/cpuinfo
 
+processor	: 63
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 46
+model name	: Intel(R) Xeon(R) CPU           X7550  @ 2.00GHz
+stepping	: 6
+microcode	: 0xa
+cpu MHz		: 1064.000
+cache size	: 18432 KB
+physical id	: 3
+siblings	: 16
+core id		: 11
+cpu cores	: 8
+apicid		: 119
+initial apicid	: 119
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2 x2apic popcnt lahf_lm ida epb dtherm tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 4000.31
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 44 bits physical, 48 bits virtual
+power management:
+```
 
+* 32 cores = 8 x 4 = 32 x 2 thread context = 64 cores
+
+* Support vectorial to MMX,sse4. ```vmx est tm2 ssse3 cx16 xtpr pdcm dca sse4_1 sse4_2```
 
 ## B. Product of two matrices (MM)
 
@@ -125,7 +156,14 @@ gcc -O2 -ftree-vectorize -fopt-info-vec-missed mm.c -o mmvmissed
 ```
 gcc -O2 -msse4 mm-v.c -o mm-v
 ./mm-v
+0.48407 sec
 ```
+
+| | | |
+|-|-|-|
+| time | 0.50073| 0.50654 |
+
+The code includes the vector intrisecs ```#include <smmintrin.h>```
 
 Results are compared and discussed
 
