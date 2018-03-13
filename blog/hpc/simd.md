@@ -1,3 +1,7 @@
+# SIMD support of the processor core
+
+# Concepts
+
 * Campus virtual: https://mop.cv.uma.es/mod/resource/view.php?id=424829
 
 * Flynn taxonomy: https://en.wikipedia.org/wiki/Flynn%27s_taxonomy
@@ -10,15 +14,11 @@ Each processing unit (PU) is shown for a uni-core or multi-core compute:
 ![simd](https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/SIMD.svg/500px-SIMD.svg.png)
 
 
-Steps:
-
-# SIMD support of the processor core
-
-## Vectorization
+# Vectorization
 Editando el `Makefile`
 
-### Auto-vectorization
-### Manual vectorization
+## Auto-vectorization
+## Manual vectorization
 Añadir vectorizacion de instrucciones de forma manual con lo de AVX 
     
 ![](https://raw.githubusercontent.com/vrandkode/vrandkode.resources/master/blog/hpc/vmx.png)
@@ -158,7 +158,7 @@ gcc -O2 -msse4 dist-v.c -o dist-v
 *The report must explain how the manual vectorization is accomplished.*
 ...
 
-## ispc compilation
+## Extra: Ispc compilation
 
 *ispc* compiles a C-based SPMD programming language to run on the SIMD units of CPUs; it frequently provides a 3x or more speedup on CPUs with 4-wide vector SSE units and 5x-6x on CPUs with 8-wide AVX vector units, without any of the difficulty of writing intrinsics code. Parallelization across multiple cores is also supported by ispc, making it possible to write programs that achieve performance improvement that scales by both number of cores and vector unit size.
 
