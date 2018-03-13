@@ -11,3 +11,14 @@ Each processing unit (PU) is shown for a uni-core or multi-core compute:
 ![simd](https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/SIMD.svg/500px-SIMD.svg.png)
 
 
+Steps:
+
+# SIMD support of the processor core
+
+## Vectorization
+### Auto-vectorization
+### Manual vectorization
+Añadir vectorizacion de instrucciones de forma manual con lo de AVX 
+    
+![](https://raw.githubusercontent.com/vrandkode/vrandkode.resources/master/blog/hpc/vmx.png)
+
