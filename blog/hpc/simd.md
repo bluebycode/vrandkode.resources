@@ -169,6 +169,8 @@ https://github.com/ispc/ispc
 https://ispc.github.io/example.html
 
 
+mm.ispc: https://github.com/vrandkode/vrandkode.resources/blob/master/blog/hpc/simd_sources/mm.ispc
+
 ## How to compile with ispc
 
 ```
