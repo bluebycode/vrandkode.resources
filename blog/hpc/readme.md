@@ -120,6 +120,35 @@ gcc -O2 -ftree-vectorize -fopt-info-vec-optimized mm.c -o mmvoptimized
 gcc -O2 -ftree-vectorize -fopt-info-vec-missed mm.c -o mmvmissed
 ```
 
+
+3. SIMD compiler intrinsics are used to explicitly exploit SIMD parallelis
+```
+gcc -O2 -msse4 mm-v.c -o mm-v
+./mm-v
+```
+
+Results are compared and discussed
+
+
+## Sin() for a large set of numbers using a polynomic expansion.
+
+1. Only compiler optimization
+```
+gcc -O2 sinx.c -o mm
+./sinx
+```
+
+2. Auto-vectorization option
+```
+gcc -O2 -ftree-vectorize sinx.c -o sinxv
+./sinxv
+#Besides, the compiler options "-fopt..." and "-S" can be used to obtain information about the vectorization process.
+gcc -O2 -S sinx.c
+gcc -O2 -ftree-vectorize -fopt-info-vec-optimized sinx.c -o sinxvoptimized
+gcc -O2 -ftree-vectorize -fopt-info-vec-missed sinx.c -o sinxvmissed
+```
+
+
 * Optimization using info-vec flags
 *-fopt-info-vec-optimized/missed* Prints information about optimised/missed optimization opportunities from vectorization passes on stderr.
 
@@ -151,7 +180,8 @@ for (i=0; i<N; i++)
 ```
 
 * Vectorizing loop at sinc.c:58
-Compiler vectorise it but loop is just assignment.
+
+Compiler vectorise it but loop is just the assignment.
 ```
 for (i=0; i<N; i++)
     x[i] = 1.0; <-- assignment
@@ -169,33 +199,6 @@ sinx.c:58: note: === vect_do_peeling_for_loop_bound ===Setting upper bound of nb
 sinx.c:58: note: LOOP VECTORIZED.
 ```
 
-
-3. SIMD compiler intrinsics are used to explicitly exploit SIMD parallelis
-```
-gcc -O2 -msse4 mm-v.c -o mm-v
-./mm-v
-```
-
-Results are compared and discussed
-
-
-## Sin() for a large set of numbers using a polynomic expansion.
-
-1. Only compiler optimization
-```
-gcc -O2 sinx.c -o mm
-./sinx
-```
-
-2. Auto-vectorization option
-```
-gcc -O2 -ftree-vectorize sinx.c -o sinxv
-./sinxv
-#Besides, the compiler options "-fopt..." and "-S" can be used to obtain information about the vectorization process.
-gcc -O2 -S sinx.c
-gcc -O2 -ftree-vectorize -fopt-info-vec-optimized sinx.c -o sinxvoptimized
-gcc -O2 -ftree-vectorize -fopt-info-vec-missed sinx.c -o sinxvmissed
-```
 
 3. SIMD compiler intrinsics are used to explicitly exploit SIMD parallelis
 ```
