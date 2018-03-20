@@ -104,4 +104,23 @@ if([parallel :] scalar-expression)
 
 http://ebookcentral.proquest.com.uma.debiblio.com/lib/bibliotecauma-ebooks/reader.action?docID=3338748&query=
 
+# Exercise
+
+```
+gcc -fopenmp -o example example.c
+```
+
+```
+#include <omp.h>
+int main()
+{
+   #pragma omp parallel
+   {
+     int ID=omp_get_thread_num();
+     printf("hello(%d)", ID);
+     printf("world(%d)\n", ID);
+   }
+}
+```
+
 
