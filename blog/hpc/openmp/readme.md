@@ -123,4 +123,12 @@ int main()
 }
 ```
 
+```
+$ ./example
+hello(2)world(2)
+hello(1)world(1)
+hello(0)world(0)
+hello(3)world(3)
+```
+
 
