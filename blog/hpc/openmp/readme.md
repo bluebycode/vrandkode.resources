@@ -112,6 +112,7 @@ gcc -fopenmp -o example example.c
 
 ```
 #include <omp.h>
+#include <stdio.h>
 int main()
 {
    #pragma omp parallel
