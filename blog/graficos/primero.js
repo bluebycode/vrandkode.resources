@@ -1,3 +1,20 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Marketplace
+Explore
+ @vrandkode
+Sign out
+1
+0 0 vrandkode/vrandkode.resources
+ Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
+vrandkode.resources/blog/graficos/primero.js
+62fd43c  2 minutes ago
+@vrandkode vrandkode Update primero.js
+     
+217 lines (181 sloc)  6.19 KB
 @info
 type your project information here
 and the author
@@ -214,3 +231,16 @@ void main() {
     }
     gl_FragColor = vec4(col, 1.);
 }
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
+Press h to open a hovercard with more details.
