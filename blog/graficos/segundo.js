@@ -21,7 +21,7 @@ scene.add( camera );
 var uniforms = {
   resolution : { type:"v2", value:new THREE.Vector2(viewportWidth,viewportHeight) },
   time: { type:"f", value: 1 },
-  mouse: { type:"v2", value:new THREE.Vector2(0,0) },
+  mouse: { type:"v2", value:new THREE.Vector2(2,4) },
  // mouseLeft: { type:"i", value:0 },
   tex0: { type:"t", value:0, texture: THREE.ImageUtils.loadTexture("/samples/concrete1.jpg") }
 };
@@ -47,10 +47,10 @@ var material2 = new THREE.ShaderMaterial({
   fragmentShader: glsl_fs2
 });
 var geometry = new THREE.Geometry();
-geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-1, -1, 0)));
-geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(1, -1, 0)));
-geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(1, 1, 0)));
-geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-1, 2, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-1, -0.8, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(1, -0.8, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(1, 0.8, 0)));
+geometry.vertices.push(new THREE.Vertex(new THREE.Vector3(-1, 0.8, 0)));
 geometry.faces.push(new THREE.Face4(0,1,2,3));
 
 var s = viewportWidth/512.0;
@@ -67,17 +67,20 @@ geometry.faceVertexUvs[0].push([
 
 
 var geometry2 = new THREE.Geometry();
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, -0.5, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.5, -0.5, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.5, 0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.4, 0.5, 0)));
 
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.3, 0.5, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.6, 0.5, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.6, -0.5, 0)));
+
+
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, 0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, -0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.4, -0.5, 0)));
+
+
+
 
 
 //geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, 0.5, 0)));
-geometry2.faces.push(new THREE.Face3(0,1,2),new THREE.Face3(3,4,5));
+geometry2.faces.push(new THREE.Face3(0,1,2),new THREE.Face3(1,2,3));
 
 
 
