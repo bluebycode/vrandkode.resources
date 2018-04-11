@@ -71,9 +71,9 @@ geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, -0.5, 0)));
 geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.5, -0.5, 0)));
 geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.5, 0.5, 0)));
 
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(1.2, 1.2, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, 0.5, 0)));
-geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.5, 0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(0.3, 0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.6, 0.5, 0)));
+geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.6, -0.5, 0)));
 
 
 //geometry2.vertices.push(new THREE.Vertex(new THREE.Vector3(-0.5, 0.5, 0)));
