@@ -1,20 +1,4 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @vrandkode
-Sign out
-1
-0 0 vrandkode/vrandkode.resources
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
-vrandkode.resources/blog/graficos/primero.js
-62fd43c  2 minutes ago
-@vrandkode vrandkode Update primero.js
-     
-217 lines (181 sloc)  6.19 KB
+
 @info
 type your project information here
 and the author
