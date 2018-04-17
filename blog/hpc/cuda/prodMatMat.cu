@@ -28,69 +28,38 @@
  * Computes the vector addition of A and B into C. The 3 vectors have the same
  * number of elements numElements.
  */
+
 __global__ void
-vectorAdd(const float *A, const float *B, float *C, int numElements)
+prodMul(const float *A, const float *B, float *C, int size)
 {
+    
     int i = blockDim.x * blockIdx.x + threadIdx.x;
-    unsigned int start_time = clock();
-    if (i < numElements)
-    {
-        C[i] = A[i] + B[i];
-    }
-    unsigned int stop_time = clock();
-
-    if(i == 0)
-    {
-    printf("Time spent: %d\n", stop_time - start_time);
-
-    }
-}
-
-__global__ void
-matrixAdd(const float *A, const float *B, float *C, int size)
-{
-    int idx = blockDim.x * blockIdx.x + threadIdx.x;
-    unsigned int start_time = clock();
-    if (idx < size)
-    {
-        for (int i = 0; i < size; i++)
-        {
-            C[idx*size + i] =  A[idx*size + i] + B[idx*size + i];
-        }
-    }
-    unsigned int stop_time = clock();
-
-    if (idx == 0)
-    {
-       printf("Time spent: %d\n", stop_time - start_time);
-    }
-}
-
-__global__ void
-prodMV(const float *M, const float *V, float *C, int size)
-{
-    int row = blockDim.y * blockIdx.y + threadIdx.y;
-    int col = blockDim.x * blockIdx.x + threadIdx.x;
 
     unsigned int start_time = clock();
 
     float sum = 0.0f;
-    if (row < size && col < size)
+    if (i < size)
     {
-        for (int i = 0; i < vSize; i++)
+        for (int j = 0; j < size; j++)
         {
-          sum += A[row * size + i] * B[i * size + col];
+          sum = 0.0f;
+          for (int k = 0; k < size; k++)
+          {
+             sum += A[i * size + k] * B[k*size + j];
+          }
+          C[i * size + j] = sum;
         }
     }
-    C[row * size + col] = sum;
 
     unsigned int stop_time = clock();
 
-    if(row == 0)
+    if(i == 0)
     {
        printf("Time spent: %d\n", stop_time - start_time);
     }
 }
+
+#define NUM_ELEMENTS 200
 
 /**
  * Host main routine
@@ -102,7 +71,7 @@ main(void)
     cudaError_t err = cudaSuccess;
 
     // Print the vector length to be used, and compute its size
-    int numElements = 5000;
+    int numElements = NUM_ELEMENTS;
     size_t size = numElements * sizeof(float);
     printf("[Matrix addition of %d elements]\n", numElements);
 
@@ -169,7 +138,7 @@ main(void)
 
     if (err != cudaSuccess)
     {
-        fprintf(stderr, "Failed to copy vector A from host to device (error code %s)!\n", cudaGetErrorString(err));
+        fprintf(stderr, "Failed ºto copy vector A from host to device (error code %s)!\n", cudaGetErrorString(err));
         exit(EXIT_FAILURE);
     }
 
@@ -188,7 +157,7 @@ main(void)
     int threadsPerBlock = 256;
     int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock; //196
     printf("CUDA kernel launch with %d blocks of %d threads\n", blocksPerGrid, threadsPerBlock);
-    matrixAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
+    prodMul<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements);
     err = cudaGetLastError();
 
     if (err != cudaSuccess)
@@ -209,23 +178,25 @@ main(void)
         exit(EXIT_FAILURE);
     }
 
-
+    
+    float * cpu_C = (float *) malloc (size*size);
     float sum;
-    for (int row=0; row<size row++){
-        for (int col=0; col<size; col++){
+    for (int i=0; i<numElements; i++){
+        for (int j=0; j <numElements; j++){
             sum = 0.f;
-            for (int n=0; n<size; n++){
-                sum += h_A[row * size + n] * h_B[n*size+col];
+            for (int k=0; k<numElements; k++){
+                sum += h_A[i*numElements + k] * h_B[k*numElements + j];
             }
-            cpu_C[row * size + col] = sum;
+            cpu_C[i*numElements + j] = sum;
         }
     }
-
-    for (int row=0; row < size; row++){
-        for (int col=0; col < size; col++){
-            if (fabs(cpu_C[row * size + col] - h_C[row * size + col]) > 1e-2)
+    unsigned int i = 0;
+    for (int col=0; col <numElements; col++){
+        for (int row=0; row <numElements; row++){
+            i = col * numElements + row;
+            if (fabs(cpu_C[i] - h_C[i]) > 1e-2)
             {
-                fprintf(stderr, "Result verification failed at element %d: %1.5f, %1.5f!\n", i, goldC[i], h_C[i]);
+                fprintf(stderr, "Result verification failed at element %d (%d,%d): %1.5f, %1.5f!\n", i, row, col, cpu_C[i], h_C[i]);
                 exit(EXIT_FAILURE);
             }
         }
