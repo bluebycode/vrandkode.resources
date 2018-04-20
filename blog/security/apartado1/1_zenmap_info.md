@@ -13,7 +13,7 @@ nmap -T4 -A -v 192.10.1.0/24
 
 192.10.1.252
 
-![](host.png)
+![](vpc.png)
 
 ![](vpc_info.png)
 
