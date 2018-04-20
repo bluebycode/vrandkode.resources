@@ -1,22 +1,23 @@
-
+* [Cuda](#cuda)
+* [Openmp (canny)](#canny-optimizations)
 
 ## Cuda
 
-## 1. Standard multiplication
+## 1. Standard multiplication
 
 - Increasing the dimension up to size*size of devices/host arrays
 - CPU version added at the bottom of code
 
-## 2. 2 approaches
+## 2. Two approaches
 
-2.a prodMatMat2a.cu (1D approach)
+### 2.a 1D Approach [prodMatMat2a.cu](prodMatMat2a.cu)
 
 Standard implementation
 
 - The decice current thread calculates the per row multiplication
 - Drawbacks: loop of j->N
 
-2.b prodMatMat2b.cu (2D approach)
+### 2.b 2D Approach [prodMatMat2b.cu](prodMatMat2b.cu)
 
 Using blocks of TxT threads
 
@@ -30,7 +31,7 @@ dim3 dimBlock(threadsPerBlockAxis, threadsPerBlockAxis, 1);
 
 * Highest good numbers!
 
-## 3. shared
+## 3. shared
 
 Following the 2a approach but it would be improved using the 2b approach (x.y)
 
@@ -47,9 +48,9 @@ The shared vector contains a block of consecutive cells of B each block dimensio
 - Using 2D approach
 
 
-## Gperf
+## Canny optimizations
 
-canny2.c
+[canny2.c](canny2.c)
 
 * Optimizations:
 
