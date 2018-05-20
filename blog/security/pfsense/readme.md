@@ -1,11 +1,15 @@
 
+References: https://mop.cv.uma.es/pluginfile.php/521577/mod_resource/content/10/DCSSR-StudentsGuide2018.pdf
+
 1. Install pfsense image from here:
 
 https://atxfiles.pfsense.org/mirror/downloads/
 
-or wget https://atxfiles.pfsense.org/mirror/downloads/pfSense-CE-2.3.5-RELEASE-2g-i386-nanobsd.img.gz
+or 
 
-2. Add pfSense 2.3.5 from Available appliances
+```wget https://atxfiles.pfsense.org/mirror/downloads/pfSense-CE-2.3.5-RELEASE-2g-i386-nanobsd.img.gz```
+
+2. Add pfSense 2.3.5 from Available appliances and select the image downloaded (gns3 will detect it automatically or not)
 
 3. Settings > Number of interfaces set to 2
 
@@ -75,4 +79,23 @@ embedded (unknown) - Netgate Device ID: c656c6f5c3581acf75e2
  LAN (lan)       -> em1        -> v4: 192.168.1.1/24
 
 DONE
+```
+6. Go SHELL: option 8 and ping www.google.com
+
+````
+
+Enter an option: 8
+
+[2.3.5-RELEASE][root@pfSense.localdomain]/root: ping www.google.com
+PING www.google.com (216.58.211.36): 56 data bytes
+64 bytes from 216.58.211.36: icmp_seq=0 ttl=54 time=20.650 ms
+64 bytes from 216.58.211.36: icmp_seq=1 ttl=54 time=22.330 ms
+64 bytes from 216.58.211.36: icmp_seq=2 ttl=54 time=21.394 ms
+64 bytes from 216.58.211.36: icmp_seq=3 ttl=54 time=23.762 ms
+^C
+--- www.google.com ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 20.650/22.034/23.762/1.162 ms
+[2.3.5-RELEASE][root@pfSense.localdomain]/root: 
+
 ```
