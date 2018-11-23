@@ -47,7 +47,11 @@ openssl genrsa -out ca.key 2048  openssl req -new -x509 -days365 -key ca.key 
 
 ## Añadiendo Authentication/Authorisation mediante un tercero OpenAuth2
 
-Referencias: http://pzf.fremantle.org/2013/11/using-oauth-20-with-mqtt.html
+Referencias: 
+
+* Oauth: http://pzf.fremantle.org/2013/11/using-oauth-20-with-mqtt.html
+
+* Mosquitto Plugin: https://github.com/jpmens/mosquitto-auth-plug
 
 
 rdrd Party – OAuth2/Auth0Party – OAuth2/Auth0  https://auth0.com/docs/integrations/authenticating-devices-using-mqtt  openssl genrsa -out serv.key 204  openssl req -new -key serv.key -out serv.csr  openssl x509 -req -in serv.csr -CA mosq-ca.crt -CAkey ca.key -CAcreateserial -out serv.crt -days 365 -sha256  Add this line:  Listener 8883  cafile /home/mosquitto/ca.crt  certfile /home/mosquitto/serv.crt  keyfile /home/mosquitto/serv.key
