@@ -52,6 +52,8 @@ $ mosquitto_pub -t sensores/temperature -m "{value: 32.0, id: mypc}"
 
 ## Añadir authenticacion basica
 
+![](mqtt-auth-basic.png)
+
 Referencia: http://www.steves-internet-guide.com/mqtt-username-password-example/
 
 create mosquito/passwords file
@@ -76,58 +78,15 @@ password_file /home/pi/mosquito/passwords
 
 Referencia: https://mcuoneclipse.com/2017/04/14/enable-secure-communication-with-tls-and-the-mosquitto-broker/
 
-## Clientes
+
+### Usando un ESP32 de cliente
 
 
-* Desde un cliente, i.e python
+* ESP32 Pusblishing
+![](esp32-serial-output-connecting.png)
 
-pip3.6 install paho-mqtt
-
-```
-import paho.mqtt.client as paho
-import socket
-
-# https://os.mbed.com/teams/mqtt/wiki/Using-MQTT#python-client
-
-# MQTT broker hosted on local machine
-mqttc = paho.Client()
-
-# Settings for connection
-host = "192.168.0.101"
-topic= "sensores/"
-
-# Callbacks
-def on_connect(self, mosq, obj, rc):
-    print("Connected rc: " + str(rc))
-
-def on_message(mosq, obj, msg):
-    print("[Received] Topic: " + msg.topic + ", Message: " + str(msg.payload) + "\n");
-
-def on_subscribe(mosq, obj, mid, granted_qos):
-    print("Subscribed OK")
-
-def on_unsubscribe(mosq, obj, mid, granted_qos):
-    print("Unsubscribed OK")
-
-# Set callbacks
-mqttc.on_message = on_message
-mqttc.on_connect = on_connect
-mqttc.on_subscribe = on_subscribe
-mqttc.on_unsubscribe = on_unsubscribe
-
-# Connect and subscribe
-print("Connecting to " + host + "/" + topic)
-mqttc.connect(host, port=1883, keepalive=60)
-mqttc.subscribe(topic+"#", 0)
-mqttc.publish(topic+"temperature", "{ value: 45.00 , id: python-test}")
-
-# Loop forever, receiving messages
-mqttc.loop_forever()
-
-print("rc: " + str(rc))
-```
-
-* Client ESP32
+* Mosquitto server
+![](raspberry-mosquito-server-logs.png)
 
 ```
 
@@ -263,5 +222,52 @@ void loop()
 
 ```
 
+### Con python desde tu maquina
+
+$ pip3.6 install paho-mqtt
+
+```
+import paho.mqtt.client as paho
+import socket
+
+# https://os.mbed.com/teams/mqtt/wiki/Using-MQTT#python-client
+
+# MQTT broker hosted on local machine
+mqttc = paho.Client()
+
+# Settings for connection
+host = "192.168.0.101"
+topic= "sensores/"
+
+# Callbacks
+def on_connect(self, mosq, obj, rc):
+    print("Connected rc: " + str(rc))
+
+def on_message(mosq, obj, msg):
+    print("[Received] Topic: " + msg.topic + ", Message: " + str(msg.payload) + "\n");
+
+def on_subscribe(mosq, obj, mid, granted_qos):
+    print("Subscribed OK")
+
+def on_unsubscribe(mosq, obj, mid, granted_qos):
+    print("Unsubscribed OK")
+
+# Set callbacks
+mqttc.on_message = on_message
+mqttc.on_connect = on_connect
+mqttc.on_subscribe = on_subscribe
+mqttc.on_unsubscribe = on_unsubscribe
+
+# Connect and subscribe
+print("Connecting to " + host + "/" + topic)
+mqttc.connect(host, port=1883, keepalive=60)
+mqttc.subscribe(topic+"#", 0)
+mqttc.publish(topic+"temperature", "{ value: 45.00 , id: python-test}")
+
+# Loop forever, receiving messages
+mqttc.loop_forever()
+
+print("rc: " + str(rc))
+```
 
 
