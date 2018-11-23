@@ -1,4 +1,4 @@
-# Seguridad en MQTT
+# Seguridad en MQTT
 
 Como podemos incluir seguridad en MQTT:
 
@@ -8,7 +8,7 @@ Como podemos incluir seguridad en MQTT:
 
 ## Referencias: https://es.slideshare.net/AnthonyChow5/mqtt-security
 
-## SSL/TLS
+## SSL/TLS
 
 SSL – Secure Socket Layer (older standard) o Version 2 and version 3
 TLS – Transport Layer Security (newer standard) o Version 1.1, 1.2 and 1.3
