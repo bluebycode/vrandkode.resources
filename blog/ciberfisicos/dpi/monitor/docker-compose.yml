@@ -1,0 +1,33 @@
+version: "3"
+services:
+  elasticsearch:
+    image: 'elasticsearch:6.5.1' # use elasticsearch version 6.5.1, latest abailable at this momment
+    command: ["elasticsearch", "-Elogger.level=DEBUG"]
+    container_name: ids_elasticsearch
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+    ports:
+       - '0.0.0.0:9200:9200'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticdb:/usr/share/ids_elasticsearch/data
+      - "./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+    
+  grafana:
+    image: 'grafana/grafana:5.3.2' # Use latest Grafana
+    container_name: ids_grafana
+    ports:
+      - '0.0.0.0:3000:3000' # expose port 3000. Change 127.0.0.1 to 0.0.0.0 to expose grafana publicly.
+    environment:
+      - "GF_SECURITY_ADMIN_PASSWORD=ids" # Password of Grafana admin user
+    links:
+      - elasticsearch #Ensures grafana cand find elasticsearch
+
+volumes:
+  elasticdb:
+    driver: local
