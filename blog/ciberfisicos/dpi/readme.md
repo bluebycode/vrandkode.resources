@@ -1,14 +1,7 @@
 
 **Procedimiento**
 
-* Lanzar el sniffer de paquetes
-```
-sudo python3 dpi.py
-```
+* [Levantar la infrastructura Docker con ElasticSearch y Grafana](monitor/readme.md)
 
-* En otra instancia o terminal, lanzar el collector
-```
-python3 collector.py
-```
-
+* [Conectar el DPI a la red](dpi.md)
 
